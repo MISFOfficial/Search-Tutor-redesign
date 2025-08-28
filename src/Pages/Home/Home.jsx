@@ -5,6 +5,7 @@ import ReviewTeacher from "../../Component/ReviewTeacher/ReviewTeacher";
 import HowToWork from "../../Component/HowToWork/HowToWork";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link } from "react-router-dom";
+import AccountCreateGuidens from "../../Component/AccountCreateGuidens/AccountCreateGuidens";
 
 const Home = () => {
   const { loading } = useContext(AuthContext);
@@ -91,6 +92,7 @@ const Home = () => {
             </div>
           </div>
           <TuitionType></TuitionType>
+          <AccountCreateGuidens></AccountCreateGuidens>
           <ReviewTeacher></ReviewTeacher>
           <HowToWork></HowToWork>
           <ReviewGuardian></ReviewGuardian>
