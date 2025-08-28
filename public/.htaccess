@@ -1,0 +1,20 @@
+# RewriteEngine On RewriteCond %{HTTPS} !=on RewriteRule ^
+# https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] RewriteCond %{REQUEST_URI}
+# !\.(css|js|png|jpg|gif)$ RewriteCond %{REQUEST_URI} !^/index.html$ RewriteRule
+# ^(.*)$ /index.html [L,QSA] 
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Serve static files directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Redirect all other requests to index.html (for React Router)
+  RewriteRule ^ index.html [L]
+</IfModule>

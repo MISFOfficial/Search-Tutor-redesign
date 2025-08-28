@@ -1,0 +1,18 @@
+[
+  { "value": "play", "label": "Play" },
+  { "value": "nursery", "label": "Nursery" },
+  { "value": "kg", "label": "KG" },
+  { "value": "Class 1", "label": "Class 1" },
+  { "value": "Class 2", "label": "Class 2" },
+  { "value": "Class 3", "label": "Class 3" },
+  { "value": "Class 4", "label": "Class 4" },
+  { "value": "Class 5", "label": "Class 5" },
+  { "value": "Class 6", "label": "Class 6" },
+  { "value": "Class 7", "label": "Class 7" },
+  { "value": "Class 8", "label": "Class 8" },
+  { "value": "Class 9", "label": "Class 9" },
+  { "value": "Class 10 New", "label": "Class 10 New" },
+  { "value": "Class 10 SSC", "label": "Class 10 SSC" },
+  { "value": "HSC 1st Year", "label": "HSC 1st Year" },
+  { "value": "HSC 2nd Year", "label": "HSC 2nd Year" }
+]

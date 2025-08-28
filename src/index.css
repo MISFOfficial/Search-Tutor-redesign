@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hero_button {
+  animation: pulse 2s ease-in-out infinite;
+  display: block;
+  width: fit-content;
+  cursor: pointer;
+  box-shadow: 0 0 0 rgba(0, 123, 255, 0.7);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 18px rgba(0, 123, 255, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+.floating2 {
+  animation: float 2s ease-in-out infinite;
+}
+
+.img-shadow {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.howWork {
+  border: 1px solid #0675c159;
+  border-radius: 15px;
+  box-shadow: 0 3px 11px 0 #0675c159;
+  transition: 0.2s ease-in-out;
+}

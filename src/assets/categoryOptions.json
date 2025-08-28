@@ -1,0 +1,13 @@
+[
+  { "value": "Bangla Medium", "label": "Bangla Medium" },
+  { "value": "English Medium", "label": "English Medium" },
+  { "value": "Religious Studies", "label": "Religious Studies" },
+  { "value": "Admission Test", "label": "Admission Test" },
+  { "value": "Arts", "label": "Arts" },
+  { "value": "Language Learning", "label": "Language Learning" },
+  { "value": "Test Preparation", "label": "Test Preparation" },
+  { "value": "Madrasa Medium", "label": "Madrasa Medium" },
+  { "value": "Special Child Education", "label": "Special Child Education" },
+  { "value": "Uni Help", "label": "Uni Help" },
+  { "value": "Special Skill Development", "label": "Special Skill Development" }
+]

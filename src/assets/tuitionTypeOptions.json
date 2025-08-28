@@ -1,0 +1,7 @@
+[
+  { "value": "home tuition", "label": "Home Tuition" },
+  { "value": "online tuition", "label": "Online Tuition" },
+  { "value": "group tuition", "label": "Group Tuition" },
+  { "value": "Package tuition", "label": "Package Tuition" },
+  { "value": "Shadow tuition", "label": "Shadow Tuition" }
+]
