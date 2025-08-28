@@ -80,7 +80,7 @@ const AllData = () => {
                 ({group.applications.length})
               </span>
             </h2> */}
-                        <Link to={`/admin/applications/${jobId}`}>
+                        <Link to={`/admin/test/${jobId}`}>
                             <h2 className="text-xl font-bold text-indigo-700 mb-4">
                                 {group.jobTitle}{" "}
                                 <span className="text-sm text-gray-600">

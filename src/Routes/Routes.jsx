@@ -62,14 +62,14 @@ export const router = createBrowserRouter([
           </RoleRoute>
         ),
       },
-      {
-        path: "/admin/applications",
-        element: (
-          <RoleRoute allowedRoles={["admin"]}>
-            <AdminApplications />
-          </RoleRoute>
-        ),
-      },
+      // {
+      //   path: "/admin/applications",
+      //   element: (
+      //     <RoleRoute allowedRoles={["admin"]}>
+      //       <AdminApplications />
+      //     </RoleRoute>
+      //   ),
+      // },
       {
         path: "/admin/test",
         element: (
@@ -83,19 +83,19 @@ export const router = createBrowserRouter([
             Component: AllData
           },
           {
-            path: ":id",
+            path: ":jobId",
             element: <Id></Id>
           }
         ]
       },
-      {
-        path: "/admin/applications/:jobId",
-        element: (
-          <RoleRoute allowedRoles={["admin"]}>
-            <ApplicationsDetails />
-          </RoleRoute>
-        ),
-      },
+      // {
+      //   path: "/admin/applications/:jobId",
+      //   element: (
+      //     <RoleRoute allowedRoles={["admin"]}>
+      //       <ApplicationsDetails />
+      //     </RoleRoute>
+      //   ),
+      // },
       {
         path: "/manage-users",
         element: (
