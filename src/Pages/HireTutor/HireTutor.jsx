@@ -129,8 +129,12 @@ const HireTutor = () => {
                 <input
                   placeholder="01701478568"
                   className="w-full border px-2 border-black/30 py-2  focus:outline-none"
-                  type="text"
-                  {...register("phoneNumber", { required: true })}
+                  type="number"
+                  {...register("phoneNumber", {
+                    required: true,
+                    minLength: { value: 11, message: "must be at least 11 digits" },
+                    maxLength: { value: 11, message: "cannot exceed 11 digits" }
+                  })}
                 />
                 {errors.phoneNumber && (
                   <p className="text-red-500 text-xs">
@@ -342,11 +346,10 @@ const HireTutor = () => {
                 type="submit"
                 disabled={submitting}
                 className={`group mt-8 flex w-fit items-center justify-between gap-5 whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-    ${
-      submitting
-        ? "bg-gray-400 text-white cursor-not-allowed"
-        : "bg-indigo-500 text-white hover:border-indigo-500 hover:bg-white hover:text-indigo-500"
-    }
+    ${submitting
+                    ? "bg-gray-400 text-white cursor-not-allowed"
+                    : "bg-indigo-500 text-white hover:border-indigo-500 hover:bg-white hover:text-indigo-500"
+                  }
   `}>
                 {submitting ? "Submitting..." : "Submit"}
                 {!submitting && (
