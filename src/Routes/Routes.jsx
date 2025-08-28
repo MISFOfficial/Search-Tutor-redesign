@@ -21,6 +21,9 @@ import Terms from "../Pages/terms/Terms";
 import ApplicationsDetails from "../Pages/Admin/ApplicationsDetails/ApplicationsDetails";
 import ForgotPassword from "../Pages/ForgotPassword/ForgotPassword";
 import PaymentSystem from "../Pages/PaymentSystem/PaymentSystem";
+import Test from "../Pages/testSearch/Text";
+import AllData from "../Pages/testSearch/allData/AllData";
+import Id from "../Pages/testSearch/Id/Id";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +69,24 @@ export const router = createBrowserRouter([
             <AdminApplications />
           </RoleRoute>
         ),
+      },
+      {
+        path: "/admin/test",
+        element: (
+          <RoleRoute allowedRoles={["admin"]}>
+            <Test />
+          </RoleRoute>
+        ),
+        children: [
+          {
+            index: true,
+            Component: AllData
+          },
+          {
+            path: ":id",
+            element: <Id></Id>
+          }
+        ]
       },
       {
         path: "/admin/applications/:jobId",

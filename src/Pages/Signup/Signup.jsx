@@ -246,6 +246,8 @@ const Signup = () => {
                   type="text"
                   name="phoneNumber"
                   required
+                  pattern="[0-9]{11}"
+                  title="Phone number must be exactly 11 digits"
                 />
               </div>
               <div className="md:w-1/2">
@@ -350,16 +352,14 @@ const Signup = () => {
               <button
                 type="submit"
                 disabled={!agreed}
-                className={`group mt-8 flex w-fit items-center justify-between gap-5 whitespace-nowrap rounded-md border ${
-                  agreed
+                className={`group mt-8 flex w-fit items-center justify-between gap-5 whitespace-nowrap rounded-md border ${agreed
                     ? "border-transparent bg-indigo-500 text-white hover:border-indigo-500 hover:bg-white hover:text-indigo-500"
                     : "bg-gray-300 text-gray-500 "
-                } px-4 py-2 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}>
+                  } px-4 py-2 text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}>
                 Sign Up
                 <ArrowRight
-                  className={`transition-all duration-500 ease-out ${
-                    agreed ? "group-hover:translate-x-1" : ""
-                  }`}
+                  className={`transition-all duration-500 ease-out ${agreed ? "group-hover:translate-x-1" : ""
+                    }`}
                   size={16}
                 />
               </button>
