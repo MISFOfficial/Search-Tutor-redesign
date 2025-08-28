@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 import axiosInstance from '../../../utils/axiosInstance';
 
-const AllData = () => {
+const AllApplicantions = () => {
     const { searchTerm } = useOutletContext()
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -80,7 +80,7 @@ const AllData = () => {
                 ({group.applications.length})
               </span>
             </h2> */}
-                        <Link to={`/admin/test/${jobId}`}>
+                        <Link to={`/admin/applications/${jobId}`}>
                             <h2 className="text-xl font-bold text-indigo-700 mb-4">
                                 {group.jobTitle}{" "}
                                 <span className="text-sm text-gray-600">
@@ -111,4 +111,4 @@ const AllData = () => {
     );
 };
 
-export default AllData;
+export default AllApplicantions;

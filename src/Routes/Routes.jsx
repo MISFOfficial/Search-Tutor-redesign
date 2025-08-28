@@ -13,17 +13,15 @@ import HireTutor from "../Pages/HireTutor/HireTutor";
 import TuitionRequests from "../Pages/Admin/TuitionRequests/TuitionRequests";
 import PostJob from "../Pages/Admin/PostJob/PostJob";
 import AppliedJobs from "../Pages/AppliedJobs/AppliedJobs";
-import AdminApplications from "../Pages/Admin/AdminApplications/AdminApplications";
 import TutorDetailsPage from "../Pages/Admin/TutorDetailsPage/TutorDetailsPage";
 import Tutors from "../Pages/Admin/Tutors/Tutors";
 import JobDetails from "../Pages/JobDetails/JobDetails";
 import Terms from "../Pages/terms/Terms";
-import ApplicationsDetails from "../Pages/Admin/ApplicationsDetails/ApplicationsDetails";
 import ForgotPassword from "../Pages/ForgotPassword/ForgotPassword";
 import PaymentSystem from "../Pages/PaymentSystem/PaymentSystem";
-import Test from "../Pages/testSearch/Text";
-import AllData from "../Pages/testSearch/allData/AllData";
-import Id from "../Pages/testSearch/Id/Id";
+import AdminApplications from "../Pages/AdminApplications/AdminApplications";
+import AdminApplicationsDetails from "../Pages/AdminApplications/AdminApplicationsDetails/AdminApplicationsDetails";
+import AllApplicantions from "../Pages/AdminApplications/allData/AllApplicantions";
 
 export const router = createBrowserRouter([
   {
@@ -71,31 +69,23 @@ export const router = createBrowserRouter([
       //   ),
       // },
       {
-        path: "/admin/test",
+        path: "/admin/applications",
         element: (
           <RoleRoute allowedRoles={["admin"]}>
-            <Test />
+            <AdminApplications></AdminApplications>
           </RoleRoute>
         ),
         children: [
           {
             index: true,
-            Component: AllData
+            Component: AllApplicantions
           },
           {
             path: ":jobId",
-            element: <Id></Id>
+            element: <AdminApplicationsDetails></AdminApplicationsDetails>
           }
         ]
       },
-      // {
-      //   path: "/admin/applications/:jobId",
-      //   element: (
-      //     <RoleRoute allowedRoles={["admin"]}>
-      //       <ApplicationsDetails />
-      //     </RoleRoute>
-      //   ),
-      // },
       {
         path: "/manage-users",
         element: (

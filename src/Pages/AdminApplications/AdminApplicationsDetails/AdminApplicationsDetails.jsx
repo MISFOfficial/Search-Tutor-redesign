@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import AppliedCard from "../../../Component/AppliedCard/AppliedCard";
 
-const Id = () => {
+const AdminApplicationsDetails = () => {
     const { jobId } = useParams();
     const [applications, setApplications] = useState([]);
     const [jobTitle, setJobTitle] = useState("");
@@ -117,4 +117,4 @@ const Id = () => {
     );
 };
 
-export default Id;
+export default AdminApplicationsDetails;
