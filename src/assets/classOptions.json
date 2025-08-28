@@ -14,5 +14,6 @@
   { "value": "Class 10 New", "label": "Class 10 New" },
   { "value": "Class 10 SSC", "label": "Class 10 SSC" },
   { "value": "HSC 1st Year", "label": "HSC 1st Year" },
-  { "value": "HSC 2nd Year", "label": "HSC 2nd Year" }
+  { "value": "HSC 2nd Year", "label": "HSC 2nd Year" },
+  { "value": "Admission", "label": "Admission" }
 ]
