@@ -179,19 +179,6 @@ const Header = () => {
           </li>
           <li>
             <NavLink
-              to="/admin/test"
-              className={({ isActive }) =>
-                isActive ? "text-blue-600 font-bold" : ""
-              }>
-              <PlusCircle
-                size={18}
-                className="block md:hidden lg:hidden mr-2"
-              />
-              Test
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
               to="/tutors"
               className={({ isActive }) =>
                 isActive ? "text-blue-600 font-bold" : ""
