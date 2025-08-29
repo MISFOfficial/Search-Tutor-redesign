@@ -77,6 +77,8 @@ const AdminApplicationsDetails = () => {
         }
     };
 
+    console.log(applications)
+
     // UI states
     if (loading)
         return (

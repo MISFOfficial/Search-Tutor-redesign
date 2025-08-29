@@ -1,8 +1,31 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AppliedCard = ({ user, jobId, app, handleStatusChange, updatingId }) => {
   const navigate = useNavigate();
+
+  const handleStatusUpdate = (id, value) => {
+    if (value === "reviewed") {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to shortlist this application?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, shortlist",
+        cancelButtonText: "Cancel",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleStatusChange(id, value); // proceed
+        }
+      });
+    } else {
+      handleStatusChange(id, value); // normal update
+    }
+  };
+
+
   return (
     <div className="border rounded-lg p-4 shadow-sm bg-white flex flex-col sm:flex-row sm:items-center sm:justify-between">
       <div className="mb-3 sm:mb-0">
@@ -57,20 +80,19 @@ const AppliedCard = ({ user, jobId, app, handleStatusChange, updatingId }) => {
         <select
           id={`status-${app._id}`}
           value={app.status}
-          onChange={(e) => handleStatusChange(app._id, e.target.value)}
-          disabled={updatingId === app._id}
+          onChange={(e) => handleStatusUpdate(app._id, e.target.value)}
+          disabled={updatingId === app._id || app.status === "reviewed"}
           className={`border rounded px-3 py-1 transition-colors duration-300
-                          ${
-                            app.status === "pending"
-                              ? "border-yellow-500 bg-yellow-100 text-yellow-800"
-                              : app.status === "reviewed"
-                              ? "border-blue-500 bg-blue-100 text-blue-800"
-                              : app.status === "selected"
-                              ? "border-green-500 bg-green-100 text-green-800"
-                              : app.status === "rejected"
-                              ? "border-red-500 bg-red-100 text-red-800"
-                              : "border-gray-300"
-                          }
+                          ${app.status === "pending"
+              ? "border-yellow-500 bg-yellow-100 text-yellow-800"
+              : app.status === "reviewed"
+                ? "border-blue-500 bg-blue-100 text-blue-800"
+                : app.status === "selected"
+                  ? "border-green-500 bg-green-100 text-green-800"
+                  : app.status === "rejected"
+                    ? "border-red-500 bg-red-100 text-red-800"
+                    : "border-gray-300"
+            }
                         `}
           aria-label={`Update status for application ${app._id}`}>
           <option value="pending">Pending</option>
