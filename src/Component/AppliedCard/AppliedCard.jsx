@@ -1,28 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 
-const AppliedCard = ({ user, jobId, app, handleStatusChange, updatingId }) => {
+const AppliedCard = ({ user, jobId, app, handleStatusChange }) => {
   const navigate = useNavigate();
 
   const handleStatusUpdate = (id, value) => {
-    if (value === "reviewed") {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "Do you really want to shortlist this application?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: "Yes, shortlist",
-        cancelButtonText: "Cancel",
-        reverseButtons: true,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          handleStatusChange(id, value); // proceed
-        }
-      });
-    } else {
-      handleStatusChange(id, value); // normal update
-    }
+    // if (value === "reviewed") {
+    //   Swal.fire({
+    //     title: "Are you sure?",
+    //     text: "Do you really want to shortlist this application?",
+    //     icon: "question",
+    //     showCancelButton: true,
+    //     confirmButtonText: "Yes, shortlist",
+    //     cancelButtonText: "Cancel",
+    //     reverseButtons: true,
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       handleStatusChange(id, value); // proceed
+    //     }
+    //   });
+    // } else {
+    //   handleStatusChange(id, value); // normal update
+    // }
+    handleStatusChange(id, value);
   };
 
 
@@ -81,7 +81,7 @@ const AppliedCard = ({ user, jobId, app, handleStatusChange, updatingId }) => {
           id={`status-${app._id}`}
           value={app.status}
           onChange={(e) => handleStatusUpdate(app._id, e.target.value)}
-          disabled={updatingId === app._id || app.status === "reviewed"}
+          // disabled={updatingId === app._id}
           className={`border rounded px-3 py-1 transition-colors duration-300
                           ${app.status === "pending"
               ? "border-yellow-500 bg-yellow-100 text-yellow-800"

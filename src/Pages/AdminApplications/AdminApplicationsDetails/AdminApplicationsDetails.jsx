@@ -57,17 +57,52 @@ const AdminApplicationsDetails = () => {
     }, [jobId]);
 
     // Handle status change for an application
+    // const handleStatusChange = async (id, newStatus) => {
+    //     try {
+    //         setUpdatingId(id);
+    //         await axiosInstance.patch(`/applications/${id}/status`, {
+    //             status: newStatus,
+    //         });
+    //         setApplications((prev) =>
+    //             prev.map((app) =>
+    //                 app._id === id ? { ...app, status: newStatus } : app
+    //             )
+    //         );
+    //         setError(null);
+    //     } catch (err) {
+    //         console.error(err);
+    //         setError("Failed to update status");
+    //     } finally {
+    //         setUpdatingId(null);
+    //     }
+    // };
+
     const handleStatusChange = async (id, newStatus) => {
         try {
             setUpdatingId(id);
-            await axiosInstance.patch(`/applications/${id}/status`, {
-                status: newStatus,
-            });
-            setApplications((prev) =>
-                prev.map((app) =>
-                    app._id === id ? { ...app, status: newStatus } : app
-                )
-            );
+            await axiosInstance.patch(`/applications/${id}/status`, { status: newStatus });
+
+            // re-fetch applications after update (so rejected/selected list refreshes)
+            const res = await axiosInstance.get("/applications");
+            const groupedApplications = res.data.reduce((acc, app) => {
+                const job = app.jobDetails || app.job || {};
+                const jId = job.jobId || "unknown";
+
+                if (!acc[jId]) {
+                    acc[jId] = {
+                        jobTitle: job.title || "Untitled Job",
+                        applications: [],
+                    };
+                }
+                acc[jId].applications.push(app);
+                return acc;
+            }, {});
+
+            const group = groupedApplications[jobId];
+            if (group) {
+                setApplications(group.applications);
+                setJobTitle(group.jobTitle);
+            }
             setError(null);
         } catch (err) {
             console.error(err);
@@ -76,6 +111,7 @@ const AdminApplicationsDetails = () => {
             setUpdatingId(null);
         }
     };
+
 
     console.log(applications)
 

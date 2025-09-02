@@ -2,7 +2,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://search-tutor-server-bay.vercel.app",
+  // baseURL: "https://search-tutor-server-bay.vercel.app",
+  baseURL: "http://localhost:5000",
 });
 
 // 🔐 Automatically attach token to each request
