@@ -13,7 +13,7 @@ const AdminApplications = () => {
     return (
         <div className="p-4 max-w-6xl mx-auto">
             {/* Search box */}
-            <div className="mb-6 flex items-center gap-5 sticky top-20 z-50"
+            <div className="mb-6 flex items-center gap-5 sticky top-[90px] md:top-[115px] lg:top-[90px] z-40"
             >
                 <input
                     type="text"

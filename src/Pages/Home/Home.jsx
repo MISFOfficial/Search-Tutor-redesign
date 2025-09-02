@@ -5,7 +5,7 @@ import ReviewTeacher from "../../Component/ReviewTeacher/ReviewTeacher";
 import HowToWork from "../../Component/HowToWork/HowToWork";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link } from "react-router-dom";
-import AccountCreateGuidens from "../../Component/AccountCreateGuidens/AccountCreateGuidens";
+// import AccountCreateGuidens from "../../Component/AccountCreateGuidens/AccountCreateGuidens";
 
 const Home = () => {
   const { loading } = useContext(AuthContext);
