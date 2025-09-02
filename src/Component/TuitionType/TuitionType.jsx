@@ -1,24 +1,25 @@
+import { Blend, Boxes, EthernetPort, House, Package2, SmilePlus, SquareLibrary, Star, UserRound } from "lucide-react";
 import React from "react";
 
 const TuitionType = () => {
   const tuitions = [
     {
-      icon: "total_apply.png",
+      icon: <UserRound size={60} />,
       count: "100k",
       label: "Active Tutors",
     },
     {
-      icon: "total_jobs.png",
+      icon: <Package2 size={60} />,
       count: "1k",
       label: "Live Tuition Jobs",
     },
     {
-      icon: "total_happy.png",
+      icon: <SmilePlus size={60} />,
       count: "100k",
       label: "Happy Students",
     },
     {
-      icon: "total_rating.png",
+      icon: <Star size={60} />,
       count: "4.8/5",
       label: "Average Tutor Rating",
     },
@@ -28,27 +29,27 @@ const TuitionType = () => {
     {
       title: "Home Tutoring",
       desc: "Home tutoring allows students to learn various subjects in their own home.",
-      icon: "landing_page/hometutor.svg",
+      icon: <House size={80}/>,
     },
     {
       title: "Group Tutoring",
       desc: "Group tutoring allows students to learn together and solve problems at an affordable cost.",
-      icon: "landing_page/groupclass.svg",
+      icon: <Boxes size={80}/>,
     },
     {
       title: "Online Tutoring",
       desc: "Find the best tutors from anywhere and take online classes by using tools such as Google Meet, Zoom, Skype, and more.",
-      icon: "landing_page/onlinetutor.svg",
+      icon: <EthernetPort size={80} />,
     },
     {
       title: "Package Tutoring",
       desc: "Package tutoring helps a student to complete their studies within a specific time frame.",
-      icon: "landing_page/package.svg",
+      icon: <SquareLibrary size={80}/>,
     },
     {
       title: "Shadow Tutoring",
       desc: "The tutor will help the student manage school, routine, and simple daily needs.",
-      icon: "icon/shadow_tutoring.svg",
+      icon: <Blend size={80}/>,
     },
   ];
 
@@ -65,12 +66,13 @@ const TuitionType = () => {
                 <div
                   key={idx}
                   className="flex justify-center gap-9 lg:justify-between lg:gap-6 xl:gap-8">
-                  <img
+                  {/* <img
                     src={`https://caretutor-space-file.nyc3.cdn.digitaloceanspaces.com/assets/img/landing_page/${item.icon}`}
                     alt={item.label}
                     loading="lazy"
                     className="w-[80px] h-auto"
-                  />
+                  /> */}
+                  <h1 className="text-white  h-auto">{item.icon}</h1>
                   <div className="w-1/2">
                     <p className="text-[2.125rem] font-semibold text-white">
                       {item.count}
@@ -93,17 +95,17 @@ const TuitionType = () => {
             {tuitionsDesc.map((item, index) => (
               <div
                 key={index}
-                className={`flex h-fit gap-6 rounded-2xl border border-primary p-4 transition-all duration-200 ease-in-out hover:border-2 hover:bg-white ${
-                  index === 4
+                className={`flex h-fit gap-6 rounded-2xl border border-primary p-4 transition-all duration-200 ease-in-out hover:border-2 hover:bg-white ${index === 4
                     ? "justify-center mx-auto"
                     : "md:h-[9.5rem] lg:gap-9"
-                }`}>
-                <img
+                  }`}>
+                {/* <img
                   src={`https://caretutor-space-file.nyc3.cdn.digitaloceanspaces.com/assets/img/${item.icon}`}
                   alt={item.title}
                   className="w-[97px] h-auto"
                   loading="lazy"
-                />
+                /> */}
+                <h1 className="text-[#0675c1]  h-auto">{item.icon}</h1>
                 <div>
                   <h2 className="mb-3 text-xl font-bold text-[#0675c1]">
                     {item.title}
