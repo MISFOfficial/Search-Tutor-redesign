@@ -12,6 +12,7 @@ import {
 import axiosInstance from "../../../utils/axiosInstance";
 import ImagePreview from "../../../Component/ImagePreview/ImagePreview";
 import AdminNoteCard from "../../../Component/AdminNoteCard/AdminNoteCard";
+import AccountCreateGuidens from "../../../Component/AccountCreateGuidens/AccountCreateGuidens";
 
 const TutorDetailsPage = () => {
   const { uid } = useParams();
@@ -37,6 +38,9 @@ const TutorDetailsPage = () => {
       fetchUser();
     }
   }, [uid]);
+
+
+  console.log(user)
 
   if (loading) {
     return (
@@ -147,7 +151,7 @@ const TutorDetailsPage = () => {
             </div>
           </div>
           <div className="rounded-xl bg-white border border-indigo-100 shadow-md p-4 pb-8 text-center mb-4 ">
-            <AdminNoteCard user={user} />
+            {user?.accountType === 'admin' &&  <AdminNoteCard user={user} /> }
           </div>
         </div>
 
@@ -358,6 +362,8 @@ const TutorDetailsPage = () => {
           </div>
         </div>
       </div>
+
+      <AccountCreateGuidens></AccountCreateGuidens>
     </div>
   );
 };

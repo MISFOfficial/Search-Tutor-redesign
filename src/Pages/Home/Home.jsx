@@ -92,7 +92,7 @@ const Home = () => {
             </div>
           </div>
           <TuitionType></TuitionType>
-          <AccountCreateGuidens></AccountCreateGuidens>
+          {/* <AccountCreateGuidens></AccountCreateGuidens> */}
           <ReviewTeacher></ReviewTeacher>
           <HowToWork></HowToWork>
           <ReviewGuardian></ReviewGuardian>
