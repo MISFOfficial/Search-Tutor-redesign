@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
-import { Clock, Trash2, Share2 } from "lucide-react";
+import { Clock, Trash2, Share2, Pencil } from "lucide-react";
 import axiosInstance from "../../utils/axiosInstance";
 import JobPostTime from "../JobPostTime/JobPostTime";
 
@@ -11,6 +11,9 @@ const TutorJobCard = ({ job, onDelete, isAdmin }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [hasApplied, setHasApplied] = useState(false);
+
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [updatedJob, setUpdatedJob] = useState();
 
   // Fetch if user has applied
   useEffect(() => {
@@ -94,8 +97,78 @@ const TutorJobCard = ({ job, onDelete, isAdmin }) => {
     }
   };
 
+  const handleUpdate = (job) => {
+    if (!user) {
+      return navigate("/signin");
+    }
+    // console.log(job)
+    setUpdatedJob(job); // preload current job
+    setIsUpdateModalOpen(true);
+  }
+
+  // console.log(updatedJob)
+
+  const handleUpdateJob = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const{_id}=updatedJob
+
+    const reason = form.reason.value;
+    const comments = form.comments.value; // ✅ match the "name"
+
+    const updateData = {
+      reason,
+      comments,
+    };
+
+    console.log(updateData);
+    console.log(_id);
+  };
+
   return (
     <>
+      {/* ================= MODAL ================= */}
+      {isUpdateModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div className="bg-white rounded-xl p-6 shadow-lg w-full max-w-lg">
+            <h2 className="text-lg font-semibold mb-4">Update Job</h2>
+
+            <div className="space-y-3">
+              <h1>{updatedJob?.title}</h1>
+            </div>
+
+
+            <form onSubmit={handleUpdateJob}>
+              <select
+                // value={updatedJob.status || "Pending"}
+                name="reason"
+                className="w-full border-2 border-blue-600 p-2 rounded bg-transparent mb-3"
+              >
+                <option value="Pending">Pending</option>
+                <option value="Cancel">Cancel</option>
+              </select>
+              <textarea
+                placeholder="set the feedback or the reason"
+                className="border-2 border-blue-600 rounded-lg w-full h-40 p-2" name="comments">
+              </textarea>
+
+              <div className="flex items-center">
+                <button type="submit" className="btn">Submit</button>
+                <button type="button"
+                  onClick={() => setIsUpdateModalOpen(false)}
+                  className="btn"
+                >
+                  Close
+                </button>
+              </div>
+            </form>
+
+
+          </div>
+        </div>
+      )}
+
       <div className="relative  rounded-xl border border-[rgba(6,53,85,0.16)] bg-white p-4 lg:p-6 shadow transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-lg  max-w-xl">
         <div className="text-[#8c8484]">
           <h3 className="mb-3 text-xl font-semibold text-[#2b2b2c] ">
@@ -334,15 +407,27 @@ const TutorJobCard = ({ job, onDelete, isAdmin }) => {
           </div>
 
           <div className="mb-6 flex  items-center justify-between gap-6">
-            <Link>
-              <button
-                disabled={hasApplied}
-                onClick={handleApply}
-                className="  rounded-md text-sm font-medium  transition-all duration-300  border border-transparent bg-indigo-500 text-white hover:border-indigo-500 hover:bg-white hover:text-indigo-500 h-10 px-4 py-2 relative overflow-hidden"
-                type="button">
-                {hasApplied ? "Already Applied" : "Apply"}
-              </button>
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link>
+                <button
+                  disabled={hasApplied}
+                  onClick={handleApply}
+                  className="  rounded-md text-sm font-medium  transition-all duration-300  border border-transparent bg-indigo-500 text-white hover:border-indigo-500 hover:bg-white hover:text-indigo-500 h-10 px-4 py-2 relative overflow-hidden"
+                  type="button">
+                  {hasApplied ? "Already Applied" : "Apply"}
+                </button>
+              </Link>
+              {/* Update Button */}
+              {isAdmin && (
+                <button
+                  onClick={() => handleUpdate(job)}
+                  className="inline-flex items-center gap-1 text-sm px-3 py-2 rounded-md border border-gray-300 hover:bg-gray-100">
+                  <Pencil size={14} />
+                  Update
+                </button>
+              )}
+
+            </div>
             <div className="">
               <button
                 onClick={() => handleShare(job)}
