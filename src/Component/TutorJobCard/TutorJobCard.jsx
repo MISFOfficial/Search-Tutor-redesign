@@ -118,6 +118,15 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
     const reason = form.reason.value;
     const comments = form.comments.value; // ✅ match the "name"
 
+    if (!comments) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Please Put the notes',
+        showConfirmButton: false,
+        timer: 1000
+      })
+    }
+
     const updateData = {
       reason,
       comments,
@@ -184,8 +193,8 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
                 className="border-2 border-blue-600 rounded-lg w-full h-40 p-2" name="comments">
               </textarea>
 
-              <div className="flex items-center">
-                <button type="submit" className="btn">Submit</button>
+              <div className="flex items-center gap-2">
+                <button type="submit" className="btn bg-blue-600 text-white">Submit</button>
                 <button type="button"
                   onClick={() => setIsUpdateModalOpen(false)}
                   className="btn border-2 border-blue-600"
