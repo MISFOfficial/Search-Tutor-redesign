@@ -7,16 +7,10 @@ import { AuthContext } from "../../providers/AuthProvider";
 import Pagination from "../../Component/Pagination/Pagination";
 import { useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const JobBoard = () => {
   const { userInfo } = useContext(AuthContext);
-
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalJobs, setTotalJobs] = useState(0);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
@@ -29,44 +23,36 @@ const JobBoard = () => {
   const [searchTerm, setSearchTerm] = useState(searchFromUrl);
 
   const itemsPerPage = 10;
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    axiosInstance
-      .get("/jobs", {
+  // Fetch jobs using TanStack Query
+  const {
+    data,
+    isLoading,
+    isError,
+    error, refetch
+  } = useQuery({
+    queryKey: ["jobs", pageFromUrl, cityFromUrl, searchFromUrl],
+    queryFn: async () => {
+      const res = await axiosInstance.get("/jobs", {
         params: {
           page: pageFromUrl,
           limit: itemsPerPage,
           city: cityFromUrl || undefined,
           search: searchFromUrl || undefined,
         },
-      })
-      .then((res) => {
-        if (res.data.success) {
-          setJobs(res.data.data);
-          setTotalPages(res.data.totalPages);
-          setTotalJobs(res.data.totalJobs);
-        } else {
-          setError("Failed to load jobs");
-          setJobs([]);
-          setTotalPages(1);
-          setTotalJobs(0);
-        }
-      })
-      .catch(() => {
-        setError("Error fetching jobs");
-        setJobs([]);
-        setTotalPages(1);
-        setTotalJobs(0);
-      })
-      .finally(() => setLoading(false));
-  }, [pageFromUrl, cityFromUrl, searchFromUrl]);
+      });
+      return res.data;
+    },
+    keepPreviousData: true,
+  });
+
+  const jobs = data?.data || [];
+  const totalPages = data?.totalPages || 1;
+  const totalJobs = data?.totalJobs || 0;
 
   const handleCityChange = (values) => {
     setSelectedCity(values);
-
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
       if (values.length > 0) {
@@ -75,9 +61,7 @@ const JobBoard = () => {
         params.delete("city");
       }
       params.set("page", "1");
-      if (searchTerm) {
-        params.set("search", searchTerm);
-      }
+      if (searchTerm) params.set("search", searchTerm);
       return params;
     });
   };
@@ -85,30 +69,22 @@ const JobBoard = () => {
   const handleSearchSubmit = () => {
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
-      if (searchTerm) {
-        params.set("search", searchTerm);
-      } else {
-        params.delete("search");
-      }
+      if (searchTerm) params.set("search", searchTerm);
+      else params.delete("search");
       params.set("page", "1");
-      if (selectedCity.length > 0) {
-        params.set("city", selectedCity[0].value);
-      } else {
-        params.delete("city");
-      }
+      if (selectedCity.length > 0) params.set("city", selectedCity[0].value);
+      else params.delete("city");
       return params;
     });
   };
 
   const handleSearchChange = (e) => {
-    const val = e.target.value;
-    setSearchTerm(val);
+    setSearchTerm(e.target.value);
   };
 
   const handleClearFilters = () => {
     setSearchTerm("");
     setSelectedCity([]);
-
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
       params.delete("search");
@@ -131,9 +107,7 @@ const JobBoard = () => {
       if (result.isConfirmed) {
         try {
           await axiosInstance.delete(`/jobs/${jobId}`);
-          setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
-          setTotalJobs((prev) => prev - 1);
-
+          queryClient.invalidateQueries({ queryKey: ["jobs"] }); // refetch jobs
           Swal.fire({
             title: "Deleted!",
             text: "The job has been deleted.",
@@ -142,56 +116,26 @@ const JobBoard = () => {
             showConfirmButton: false,
           });
         } catch (error) {
-          console.error("Failed to delete job", error);
-          Swal.fire(
-            "Error!",
-            "Failed to delete job. Please try again.",
-            "error"
-          );
+          Swal.fire("Error!", "Failed to delete job. Please try again.", "error");
         }
       }
     });
   };
 
-  // const handleSearchChange = (e) => {
-  //   const val = e.target.value;
-  //   setSearchTerm(val);
-
-  //   setSearchParams((prev) => {
-  //     const params = new URLSearchParams(prev);
-  //     if (val) {
-  //       params.set("search", val);
-  //     } else {
-  //       params.delete("search");
-  //     }
-  //     params.set("page", "1");
-  //     if (selectedCity.length > 0) {
-  //       params.set("city", selectedCity[0].value);
-  //     }
-  //     return params;
-  //   });
-  // };
-
   const handlePageChange = (page) => {
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev);
       params.set("page", page);
-      if (selectedCity.length > 0) {
-        params.set("city", selectedCity[0].value);
-      } else {
-        params.delete("city");
-      }
-      if (searchTerm) {
-        params.set("search", searchTerm);
-      } else {
-        params.delete("search");
-      }
+      if (selectedCity.length > 0) params.set("city", selectedCity[0].value);
+      else params.delete("city");
+      if (searchTerm) params.set("search", searchTerm);
+      else params.delete("search");
       return params;
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <span className="loading loading-spinner loading-lg"></span>
@@ -199,9 +143,10 @@ const JobBoard = () => {
     );
   }
 
-  if (error) {
-    return <p className="text-center p-4 text-red-500">{error}</p>;
+  if (isError) {
+    return <p className="text-center p-4 text-red-500">{error.message}</p>;
   }
+
 
   return (
     <div className="bg-[#F2F5FC]">
@@ -292,6 +237,7 @@ const JobBoard = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-3">
               {jobs.map((job) => (
                 <TutorJobCard
+                  refetch={refetch}
                   key={job._id}
                   job={job}
                   onDelete={handleDeleteJob}

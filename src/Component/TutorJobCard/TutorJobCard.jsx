@@ -7,7 +7,7 @@ import { Clock, Trash2, Share2, Pencil } from "lucide-react";
 import axiosInstance from "../../utils/axiosInstance";
 import JobPostTime from "../JobPostTime/JobPostTime";
 
-const TutorJobCard = ({ job, onDelete, isAdmin }) => {
+const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [hasApplied, setHasApplied] = useState(false);
@@ -106,13 +106,14 @@ const TutorJobCard = ({ job, onDelete, isAdmin }) => {
     setIsUpdateModalOpen(true);
   }
 
-  // console.log(updatedJob)
+  console.log(updatedJob?.status)
+  console.log(updatedJob)
 
-  const handleUpdateJob = (e) => {
+  const handleUpdateJob = async (e) => {
     e.preventDefault();
     const form = e.target;
 
-    const{_id}=updatedJob
+    const { _id } = updatedJob
 
     const reason = form.reason.value;
     const comments = form.comments.value; // ✅ match the "name"
@@ -122,8 +123,28 @@ const TutorJobCard = ({ job, onDelete, isAdmin }) => {
       comments,
     };
 
-    console.log(updateData);
-    console.log(_id);
+    try {
+      const res = await axiosInstance.put(
+        `/applications/${_id}`, // <-- application._id from your fetched data
+        updateData
+      );
+
+      if (res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Updated!",
+          text: "Application status updated successfully.",
+        });
+        setIsUpdateModalOpen(false);
+        refetch()
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.message,
+      });
+    }
   };
 
   return (
@@ -134,12 +155,22 @@ const TutorJobCard = ({ job, onDelete, isAdmin }) => {
           <div className="bg-white rounded-xl p-6 shadow-lg w-full max-w-lg">
             <h2 className="text-lg font-semibold mb-4">Update Job</h2>
 
-            <div className="space-y-3">
+            <div className="space-y-3 mb-5">
               <h1>{updatedJob?.title}</h1>
             </div>
 
-
-            <form onSubmit={handleUpdateJob}>
+            {updatedJob?.status ? <div className="flex flex-col gap-3">
+              <h1 className="border border-blue-600 p-2 rounded-lg
+              ">{updatedJob?.status}</h1>
+              <h1 className="border border-blue-600 p-2 rounded-lg 
+              ">{updatedJob?.feedback}</h1>
+              <button type="button"
+                onClick={() => setIsUpdateModalOpen(false)}
+                className="btn w-fit border-2 border-blue-600"
+              >
+                Close
+              </button>
+            </div> : <form onSubmit={handleUpdateJob}>
               <select
                 // value={updatedJob.status || "Pending"}
                 name="reason"
@@ -157,13 +188,12 @@ const TutorJobCard = ({ job, onDelete, isAdmin }) => {
                 <button type="submit" className="btn">Submit</button>
                 <button type="button"
                   onClick={() => setIsUpdateModalOpen(false)}
-                  className="btn"
+                  className="btn border-2 border-blue-600"
                 >
                   Close
                 </button>
               </div>
-            </form>
-
+            </form>}
 
           </div>
         </div>
