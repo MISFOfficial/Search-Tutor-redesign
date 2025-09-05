@@ -181,10 +181,11 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
               </button>
             </div> : <form onSubmit={handleUpdateJob}>
               <select
-                // value={updatedJob.status || "Pending"}
+                value={updatedJob.status || ''}
                 name="reason"
                 className="w-full border-2 border-blue-600 p-2 rounded bg-transparent mb-3"
               >
+                <option value="Appointed">Appointed</option>
                 <option value="Pending">Pending</option>
                 <option value="Cancel">Cancel</option>
               </select>
