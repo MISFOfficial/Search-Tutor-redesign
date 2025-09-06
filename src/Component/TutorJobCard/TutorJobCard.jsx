@@ -169,8 +169,8 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
             </div>
 
             {updatedJob?.status ? <div className="flex flex-col gap-3">
-              <h1 className="border border-blue-600 p-2 rounded-lg
-              ">{updatedJob?.status}</h1>
+              <h1 className={`border border-blue-600 p-2 rounded-lg
+              ${updatedJob?.status === 'Cancel' && 'bg-red-200 border-red-200'} ${updatedJob?.status === 'Pending' && 'bg-yellow-200 border-yellow-200'} ${updatedJob?.status === 'Appointed' && 'bg-green-200 border-green-200'}`}>{updatedJob?.status}</h1> 
               <h1 className="border border-blue-600 p-2 rounded-lg 
               ">{updatedJob?.feedback}</h1>
               <button type="button"
@@ -181,7 +181,6 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
               </button>
             </div> : <form onSubmit={handleUpdateJob}>
               <select
-                value={updatedJob.status || ''}
                 name="reason"
                 className="w-full border-2 border-blue-600 p-2 rounded bg-transparent mb-3"
               >
