@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   User,
@@ -13,12 +13,37 @@ import axiosInstance from "../../../utils/axiosInstance";
 import ImagePreview from "../../../Component/ImagePreview/ImagePreview";
 import AdminNoteCard from "../../../Component/AdminNoteCard/AdminNoteCard";
 import AccountCreateGuidens from "../../../Component/AccountCreateGuidens/AccountCreateGuidens";
+import { AuthContext } from "../../../providers/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const TutorDetailsPage = () => {
+  const { user } = useContext(AuthContext)
   const { uid } = useParams();
-  const [user, setUser] = useState(null);
+  const [users, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+
+  // query to fetch all users
+  const { data: mathced_user } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosInstance.get("/users");
+      return res.data;
+    },
+  });
+
+  console.log(mathced_user?.data)
+
+  // match the logged-in user’s email
+  // match the logged-in user’s email
+  const matchedUser = mathced_user?.data?.find(
+    (u) => u.email?.toLowerCase() === user?.email?.toLowerCase()
+  );
+
+  // console.log("Matched User:", matchedUser);
+
+  // console.log(matchedUser)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -40,7 +65,7 @@ const TutorDetailsPage = () => {
   }, [uid]);
 
 
-  console.log(user)
+  console.log(users?.email)
 
   if (loading) {
     return (
@@ -54,7 +79,7 @@ const TutorDetailsPage = () => {
     return <div className="text-center py-10 text-red-500">{error}</div>;
   }
 
-  if (!user) {
+  if (!users) {
     return (
       <div className="text-center py-10 text-red-500">Tutor not found</div>
     );
@@ -70,13 +95,13 @@ const TutorDetailsPage = () => {
               <div className=" relative size-fit min-w-[100px]">
                 <img
                   alt={
-                    user?.name || (
+                    users?.name || (
                       <span className="text-red-600">Not Given</span>
                     )
                   }
                   className="w-36 h-36 object-cover shadow-[0px_3px_8px_rgba(0,0,0,0.24)] rounded-full"
                   src={
-                    user?.image ||
+                    users?.image ||
                     "	https://caretutor-space-file.nyc3.cdn.digitaloceanspaces.com/assets/img/avataaar/Profile-Picture.png"
                   }
                 />
@@ -85,10 +110,10 @@ const TutorDetailsPage = () => {
             <div className="mt-2 text-center">
               <h2 className="flex gap-2 text-xl font-bold items-center justify-center lg:text-2xl">
                 <span className="w-full md:w-fit flex items-center justify-center gap-2">
-                  {user?.name || (
+                  {users?.name || (
                     <span className="text-red-600">Not Given</span>
                   )}{" "}
-                  {user.isVerified && !user.isRedVerified && (
+                  {users.isVerified && !users.isRedVerified && (
                     <div className=" ">
                       <img
                         src="https://cdn-icons-png.flaticon.com/512/15050/15050690.png"
@@ -97,7 +122,7 @@ const TutorDetailsPage = () => {
                       />
                     </div>
                   )}
-                  {user.isRedVerified && !user.isVerified && (
+                  {users.isRedVerified && !users.isVerified && (
                     <div>
                       <img
                         src="https://img.icons8.com/?size=30&id=99285&format=png"
@@ -123,7 +148,7 @@ const TutorDetailsPage = () => {
                 Email
               </p>
               <p className="ms-6 mt-1 text-sm  font-semibold text-[rgba(34,34,34,0.5)]">
-                {user?.email || <span className="text-red-600">Not Given</span>}
+                {users?.email || <span className="text-red-600">Not Given</span>}
               </p>
             </div>
             <div className="mb-2 mt-4 text-left block">
@@ -133,25 +158,30 @@ const TutorDetailsPage = () => {
               </p>
 
               <p className="ms-6 mt-1 text-sm  font-semibold text-[rgba(34,34,34,0.5)]">
-                {user?.phone || <span className="text-red-600">Not Given</span>}
+                {users?.phone || <span className="text-red-600">Not Given</span>}
               </p>
             </div>
-            <div className="mb-2 mt-4 text-left block">
+            <div className="mt-4 text-left block">
               <p className="flex items-center gap-2 font-bold">
                 <MapPin size={16} />
                 Address
               </p>
               <p className="ms-6 mt-1 text-sm  font-semibold text-[rgba(34,34,34,0.5)]">
-                {user?.location || (
+                {users?.location || (
                   <span className="text-red-600">Not Given</span>
                 )}
                 ,{" "}
-                {user?.city || <span className="text-red-600">Not Given</span>}
+                {users?.city || <span className="text-red-600">Not Given</span>}
               </p>
             </div>
           </div>
+
+          <div>
+            <AccountCreateGuidens></AccountCreateGuidens>
+          </div>
+
           <div className="rounded-xl bg-white border border-indigo-100 shadow-md p-4 pb-8 text-center mb-4 ">
-            {user?.accountType === 'admin' &&  <AdminNoteCard user={user} /> }
+            {matchedUser && <AdminNoteCard users={users} />}
           </div>
         </div>
 
@@ -171,7 +201,7 @@ const TutorDetailsPage = () => {
                       Name
                     </strong>
 
-                    {user?.name || (
+                    {users?.name || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -180,7 +210,7 @@ const TutorDetailsPage = () => {
                       Contact Number
                     </strong>
 
-                    {user?.phone || (
+                    {users?.phone || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -189,7 +219,7 @@ const TutorDetailsPage = () => {
                       Whatsapp Number
                     </strong>
 
-                    {user?.whatsapp || (
+                    {users?.whatsapp || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -199,7 +229,7 @@ const TutorDetailsPage = () => {
                     </strong>
 
                     <span className="break-words text-[12px]">
-                      {user?.email || (
+                      {users?.email || (
                         <span className="text-red-600">Not Given</span>
                       )}
                     </span>
@@ -210,7 +240,7 @@ const TutorDetailsPage = () => {
                     </strong>
 
                     <span className="capitalize">
-                      {user?.gender || (
+                      {users?.gender || (
                         <span className="text-red-600">Not Given</span>
                       )}
                     </span>
@@ -219,9 +249,9 @@ const TutorDetailsPage = () => {
                     <strong className="block w-[8.4rem] shrink-0 text-gray-700 md:w-[13.5rem]">
                       Facebook Profile Link
                     </strong>
-                    {user?.fbLink ? (
+                    {users?.fbLink ? (
                       <a
-                        href={user?.fbLink}
+                        href={users?.fbLink}
                         target="blank"
                         className="text-blue-500 font-medium">
                         Link
@@ -234,7 +264,7 @@ const TutorDetailsPage = () => {
                     <strong className="block w-[8.4rem] shrink-0 text-gray-700 md:w-[13.5rem]">
                       City
                     </strong>
-                    {user?.city || (
+                    {users?.city || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -242,7 +272,7 @@ const TutorDetailsPage = () => {
                     <strong className="block w-[8.4rem] shrink-0 text-gray-700 md:w-[13.5rem]">
                       Address
                     </strong>
-                    {user?.location || (
+                    {users?.location || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -263,7 +293,7 @@ const TutorDetailsPage = () => {
                       Current Institute
                     </strong>
 
-                    {user?.institute || (
+                    {users?.institute || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -272,7 +302,7 @@ const TutorDetailsPage = () => {
                       ID Card No
                     </strong>
 
-                    {user?.idNo || (
+                    {users?.idNo || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p> */}
@@ -281,7 +311,7 @@ const TutorDetailsPage = () => {
                       Department
                     </strong>
 
-                    {user?.department || (
+                    {users?.department || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -290,7 +320,7 @@ const TutorDetailsPage = () => {
                       Session
                     </strong>
 
-                    {user?.degree || (
+                    {users?.degree || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -299,7 +329,7 @@ const TutorDetailsPage = () => {
                       Year
                     </strong>
 
-                    {user?.passingYear || (
+                    {users?.passingYear || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -308,7 +338,7 @@ const TutorDetailsPage = () => {
                       Experience
                     </strong>
 
-                    {user?.experience || (
+                    {users?.experience || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -332,7 +362,7 @@ const TutorDetailsPage = () => {
                       সম্মতি
                     </strong>
 
-                    {user?.agreement || (
+                    {users?.agreement || (
                       <span className="text-red-600">Not Given</span>
                     )}
                   </p>
@@ -349,12 +379,12 @@ const TutorDetailsPage = () => {
             </div>
 
             <div className="mt-4 flex flex-col md:flex-row lg:flex-row gap-4 items-center ">
-              {user?.nid && <ImagePreview src={user?.nid} label="NID" />}
-              {user?.idCard && (
-                <ImagePreview src={user?.idCard} label="Student ID CARD" />
+              {users?.nid && <ImagePreview src={users?.nid} label="NID" />}
+              {users?.idCard && (
+                <ImagePreview src={users?.idCard} label="Student ID CARD" />
               )}
             </div>
-            {!(user.nid || user.idCard) && (
+            {!(users.nid || users.idCard) && (
               <p className="text-red-600 text-sm mt-4 md:ms-8">
                 You have not uploaded any credentials yet.
               </p>
@@ -362,8 +392,6 @@ const TutorDetailsPage = () => {
           </div>
         </div>
       </div>
-
-      <AccountCreateGuidens></AccountCreateGuidens>
     </div>
   );
 };

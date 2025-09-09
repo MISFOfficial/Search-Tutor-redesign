@@ -395,7 +395,7 @@ const Profile = () => {
               </p>
             </div>
           </div>
-          {formData?.adminNote && (
+          {/* {formData?.adminNote && (
             <div className="rounded-xl bg-blue-50 border border-blue-200 shadow p-4">
               <h3 className="text-lg font-semibold text-blue-800 flex items-center gap-2 mb-2">
                 <svg
@@ -418,7 +418,7 @@ const Profile = () => {
                 {formData?.adminNote}
               </p>
             </div>
-          )}
+          )} */}
         </div>
         {/* Sidebar end */}
         <div className="rounded-2xl bg-white border border-indigo-100 shadow-md p-4 pb-8 md:p-6 w-full lg:w-[60%]">

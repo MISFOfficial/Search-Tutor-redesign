@@ -1,3 +1,4 @@
+import { FacebookIcon, Group, GroupIcon } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -166,30 +167,35 @@ const Footer = () => {
               <a
                 href="https://www.facebook.com/share/g/1CsJLDz75R/"
                 target="_blank">
-                <img
-                  alt="Home Tutors &amp; Tuitions"
-                  loading="lazy"
-                  width="122"
-                  height="50"
-                  decoding="async"
-                  data-nimg="1"
-                  src="https://caretutor-space-file.nyc3.cdn.digitaloceanspaces.com/assets/img/icon/Tutor_Community.svg"
-                  className="text-transparent"
-                />
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 320 512"
+                  className="size-8 rounded-xl border border-white p-1 transition-all duration-500 ease-out hover:bg-white hover:text-primary"
+                  height="1em"
+                  width="1em"
+                  xmlns="https://www.w3.org/2000/svg">
+                  <title>Facebook</title>
+                  <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path>
+                </svg>
               </a>
               <a
+                className="flex items-center"
                 href="https://www.facebook.com/share/g/12LNfQSHmif/?mibextid=A7sQZp"
                 target="_blank">
-                <img
-                  alt="Home Tutors &amp; Tuitions"
-                  loading="lazy"
-                  width="122"
-                  height="50"
-                  decoding="async"
-                  data-nimg="1"
-                  src="https://caretutor-space-file.nyc3.cdn.digitaloceanspaces.com/assets/img/icon/Guardians_Community.svg"
-                  className="text-transparent"
-                />
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 320 512"
+                  className="size-8 rounded-xl border border-white p-1 transition-all duration-500 ease-out hover:bg-white hover:text-primary"
+                  height="1em"
+                  width="1em"
+                  xmlns="https://www.w3.org/2000/svg">
+                  <title>Facebook</title>
+                  <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path>
+                </svg>
               </a>
             </div>
           </nav>

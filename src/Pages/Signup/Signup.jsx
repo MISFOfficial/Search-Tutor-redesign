@@ -7,6 +7,8 @@ import cityOptions from "../../assets/cityOptions.json";
 import { useForm } from "react-hook-form";
 import Select from "react-dropdown-select";
 import axiosInstance from "../../utils/axiosInstance";
+import gurdian from '../../assets/gurdia.svg'
+import tutor from '../../assets/tutor.svg'
 
 const Signup = () => {
   const { createUser, loading, setLoading, setUserData } =
@@ -131,7 +133,7 @@ const Signup = () => {
                     <img
                       alt="guardian avatar"
                       className="size-[100px] rounded-full md:size-[67px]"
-                      src="https://caretutor-space-file.nyc3.cdn.digitaloceanspaces.com/assets/img/avataaar/Guardian-01.png"
+                      src={gurdian}
                     />
                     <div>
                       <p className="text-xl font-bold md:text-base">
@@ -170,7 +172,7 @@ const Signup = () => {
                     <img
                       alt="tutor avatar"
                       className="size-[100px] rounded-full md:size-[67px]"
-                      src="https://caretutor-space-file.nyc3.cdn.digitaloceanspaces.com/assets/img/avataaar/Tutor-01.png"
+                      src={tutor}
                     />
                     <div>
                       <p className="text-xl font-bold md:text-base">Tutor</p>

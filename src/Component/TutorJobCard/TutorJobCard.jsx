@@ -156,6 +156,8 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
     }
   };
 
+  console.log(updatedJob?.feedback)
+
   return (
     <>
       {/* ================= MODAL ================= */}
@@ -168,27 +170,18 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
               <h1>{updatedJob?.title}</h1>
             </div>
 
-            {updatedJob?.status ? <div className="flex flex-col gap-3">
-              <h1 className={`border border-blue-600 p-2 rounded-lg
-              ${updatedJob?.status === 'Cancel' && 'bg-red-200 border-red-200'} ${updatedJob?.status === 'Pending' && 'bg-yellow-200 border-yellow-200'} ${updatedJob?.status === 'Appointed' && 'bg-green-200 border-green-200'}`}>{updatedJob?.status}</h1> 
-              <h1 className="border border-blue-600 p-2 rounded-lg 
-              ">{updatedJob?.feedback}</h1>
-              <button type="button"
-                onClick={() => setIsUpdateModalOpen(false)}
-                className="btn w-fit border-2 border-blue-600"
-              >
-                Close
-              </button>
-            </div> : <form onSubmit={handleUpdateJob}>
+            <form onSubmit={handleUpdateJob}>
               <select
                 name="reason"
+                defaultValue={updatedJob?.status}
                 className="w-full border-2 border-blue-600 p-2 rounded bg-transparent mb-3"
               >
-                <option value="Appointed">Appointed</option>
                 <option value="Pending">Pending</option>
-                <option value="Cancel">Cancel</option>
+                <option value="Appointed">Teacher Appointed</option>
+                <option value="Cancel">Tution Cancel</option>
               </select>
               <textarea
+              defaultValue={updatedJob?.feedback}
                 placeholder="set the feedback or the reason"
                 className="border-2 border-blue-600 rounded-lg w-full h-40 p-2" name="comments">
               </textarea>
@@ -202,7 +195,7 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
                   Close
                 </button>
               </div>
-            </form>}
+            </form>
 
           </div>
         </div>

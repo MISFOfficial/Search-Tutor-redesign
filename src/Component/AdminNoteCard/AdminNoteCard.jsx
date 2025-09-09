@@ -2,16 +2,18 @@ import { useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import Swal from "sweetalert2";
 
-const AdminNoteCard = ({ user }) => {
-  const [note, setNote] = useState(user?.adminNote || "");
-  const [tempNote, setTempNote] = useState(user?.adminNote || "");
+const AdminNoteCard = ({ users }) => {
+  const [note, setNote] = useState(users?.adminNote || "");
+  const [tempNote, setTempNote] = useState(users?.adminNote || "");
   const [loading, setLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(!user?.adminNote);
+  const [isEditing, setIsEditing] = useState(!users?.adminNote);
+
+  console.log(users)
 
   const handleSaveNote = async () => {
     try {
       setLoading(true);
-      await axiosInstance.patch(`/users/${user?._id}/note`, {
+      await axiosInstance.patch(`/users/${users?._id}/note`, {
         adminNote: tempNote,
       });
       Swal.fire({
