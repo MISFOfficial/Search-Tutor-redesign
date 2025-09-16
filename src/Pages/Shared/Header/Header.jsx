@@ -17,6 +17,7 @@ import {
   UserPlus,
   UserSquare,
 } from "lucide-react";
+import useJobNotifications from "../../../GetNotifications/useJobNotifications";
 
 const Header = () => {
   const { user, userInfo, logOut, loading } = useContext(AuthContext);
@@ -32,20 +33,12 @@ const Header = () => {
       });
   };
 
+  const { data: jobs, isLoading: jobsLoading, refetch } = useJobNotifications();
 
+  console.log(jobs)
 
   const navOption = (
     <>
-      {/* <li>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            isActive ? "text-blue-600 font-bold" : ""
-          }>
-          <Home size={18} className="block md:hidden lg:hidden" />
-          Home
-        </NavLink>
-      </li> */}
       {!user && (
         <>
           <li>
@@ -229,19 +222,28 @@ const Header = () => {
               <div className=" flex">
                 {user ? (
                   <div className="flex items-center gap-5">
-                    <div class="dropdown dropdown-end text-black">
-                      <div tabindex="0" role="button" class="text-black"><Bell /></div>
-                      <ul tabindex="0" class="dropdown-content menu bg-[#F2F5FC] rounded-box z-1 w-64 p-4 shadow-sm mt-8 border-2">
-                        <div className="flex items-center justify-between mb-5">
-                          <h1 className="text-center font-bold"></h1>
-                          <button className="font-bold text-xs">Read All</button>
-                        </div>
-                        {/* <div className="divider divider-info m-0"></div> */}
-                        <ul>
-                          <li>৬ষ্ঠ শ্রেণির শিক্ষার্থী পড়াতে হবে </li>
-                        </ul>
+                    <div className="dropdown dropdown-end text-black">
+                      <div tabIndex={0} role="button" className="text-black">
+                        <Bell onClick={() => refetch()} />
+                      </div>
+                      <ul
+                        tabIndex={0}
+                        className="dropdown-content menu bg-[#F2F5FC] rounded-box z-10 w-64 p-4 shadow-sm mt-8 border-2"
+                      >
+                        {jobsLoading ? (
+                          <li>Loading...</li>
+                        ) : jobs && jobs.length > 0 ? (
+                          jobs.map((job) => (
+                            <li key={job._id} className="mb-2">
+                              {job.title} - {job.city}
+                            </li>
+                          ))
+                        ) : (
+                          <li>No jobs found</li>
+                        )}
                       </ul>
                     </div>
+
 
                     <Link
                       onClick={handleLogout}
