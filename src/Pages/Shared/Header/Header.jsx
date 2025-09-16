@@ -226,7 +226,6 @@ const Header = () => {
                 {user ? (
                   <div className="flex items-center gap-5">
                     {/* notifications */}
-
                     {(userInfo?.accountType === "tutor" || userInfo?.accountType === "admin") &&
                       <div className="dropdown dropdown-end text-black relative">
                         <div tabIndex={0} role="button" className="text-black relative">
