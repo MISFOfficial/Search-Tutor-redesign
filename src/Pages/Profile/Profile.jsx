@@ -396,9 +396,9 @@ const Profile = () => {
               </p>
             </div>
           </div>
-            <div>
-              <AccountCreateGuidens></AccountCreateGuidens>
-            </div>
+          <div>
+            <AccountCreateGuidens></AccountCreateGuidens>
+          </div>
           {/* {formData?.adminNote && (
             <div className="rounded-xl bg-blue-50 border border-blue-200 shadow p-4">
               <h3 className="text-lg font-semibold text-blue-800 flex items-center gap-2 mb-2">
@@ -427,6 +427,14 @@ const Profile = () => {
         {/* Sidebar end */}
         <div className="rounded-2xl bg-white border border-indigo-100 shadow-md p-4 pb-8 md:p-6 w-full lg:w-[60%]">
           <div className="md:px-3">
+            {/* profile persentage */}
+            <div className="">
+              <h1 className="font-bold">Profile Complete %</h1>
+              <div className="flex items-center gap-2">
+                <progress class="progress progress-info w-full" value="70" max="100"></progress>
+                <h1>80%</h1>
+              </div>
+            </div>
             {/* Personal Information */}
             <div className="mt-4">
               <h2 className="flex items-center justify-center gap-3 text-lg font-semibold md:justify-start md:text-xl">
