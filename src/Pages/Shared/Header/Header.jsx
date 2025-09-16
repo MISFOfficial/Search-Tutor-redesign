@@ -38,6 +38,8 @@ const Header = () => {
   refetch()
   console.log(jobs)
 
+  console.log(userInfo)
+
   const navOption = (
     <>
       {!user && (
@@ -224,46 +226,47 @@ const Header = () => {
                 {user ? (
                   <div className="flex items-center gap-5">
                     {/* notifications */}
-                    <div className="dropdown dropdown-end text-black relative">
-                      <div tabIndex={0} role="button" className="text-black relative">
-                        <Bell className="cursor-pointer" />
-                        {unreadIds.length > 0 && (
-                          <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full" />
-                        )}
-                      </div>
 
-                      <ul
-                        tabIndex={0}
-                        className="dropdown-content menu bg-[#F2F5FC] rounded-box z-10 w-64 p-4 shadow-sm mt-8 border-2"
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <h1 className="font-bold">Notifications</h1>
-                          <button
-                            className="text-xs font-semibold text-blue-500"
-                            onClick={markAllAsRead}
-                          >
-                            Read All
-                          </button>
+                    {(userInfo?.accountType === "tutor" || userInfo?.accountType === "admin") &&
+                      <div className="dropdown dropdown-end text-black relative">
+                        <div tabIndex={0} role="button" className="text-black relative">
+                          <Bell className="cursor-pointer" />
+                          {unreadIds.length > 0 && (
+                            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full" />
+                          )}
                         </div>
 
-                        {jobsLoading ? (
-                          <li>Loading...</li>
-                        ) : jobs && jobs.length > 0 ? (
-                          jobs.map((job) => (
-                            <li
-                              key={job._id}
-                              className={`mb-2 ${unreadIds.includes(job._id) ? "font-bold" : ""}`}
+                        <ul
+                          tabIndex={0}
+                          className="dropdown-content menu bg-[#F2F5FC] rounded-box z-10 w-64 p-4 shadow-sm mt-8 border-2"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <h1 className="font-bold">Notifications</h1>
+                            <button
+                              className="text-xs font-semibold text-blue-500"
+                              onClick={markAllAsRead}
                             >
-                              {job.title} - {job.city}
-                            </li>
-                          ))
-                        ) : (
-                          <li>No jobs found</li>
-                        )}
-                      </ul>
-                    </div>
+                              Read All
+                            </button>
+                          </div>
 
-
+                          {jobsLoading ? (
+                            <li>Loading...</li>
+                          ) : jobs && jobs.length > 0 ? (
+                            jobs.map((job) => (
+                              <li
+                                key={job._id}
+                                className={`mb-2 ${unreadIds.includes(job._id) ? "font-bold" : ""}`}
+                              >
+                                {job.title} - {job.city}
+                              </li>
+                            ))
+                          ) : (
+                            <li>No jobs found</li>
+                          )}
+                        </ul>
+                      </div>
+                    }
                     <Link
                       onClick={handleLogout}
                       className="btn bg-indigo-500 py-2 px-8 text-white hidden md:block">
