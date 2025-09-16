@@ -176,9 +176,9 @@ const TutorDetailsPage = () => {
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <AccountCreateGuidens></AccountCreateGuidens>
-          </div>
+          </div> */}
 
           <div className="rounded-xl bg-white border border-indigo-100 shadow-md p-4 pb-8 text-center mb-4 ">
             {matchedUser && <AdminNoteCard users={users} />}

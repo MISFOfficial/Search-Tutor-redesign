@@ -431,8 +431,8 @@ const Profile = () => {
             <div className="">
               <h1 className="font-bold">Profile Complete %</h1>
               <div className="flex items-center gap-2">
-                <progress class="progress progress-info w-full" value="70" max="100"></progress>
-                <h1>80%</h1>
+                <progress class="progress progress-info w-full" value="20" max="100"></progress>
+                <h1>20%</h1>
               </div>
             </div>
             {/* Personal Information */}
