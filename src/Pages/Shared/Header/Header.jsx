@@ -33,8 +33,9 @@ const Header = () => {
       });
   };
 
-  const { data: jobs, isLoading: jobsLoading, refetch } = useJobNotifications();
-
+  const { data: jobs, isLoading: jobsLoading, refetch, unreadIds, markAllAsRead } =
+    useJobNotifications();
+  refetch()
   console.log(jobs)
 
   const navOption = (
@@ -222,19 +223,37 @@ const Header = () => {
               <div className=" flex">
                 {user ? (
                   <div className="flex items-center gap-5">
-                    <div className="dropdown dropdown-end text-black">
-                      <div tabIndex={0} role="button" className="text-black">
-                        <Bell onClick={() => refetch()} />
+                    {/* notifications */}
+                    <div className="dropdown dropdown-end text-black relative">
+                      <div tabIndex={0} role="button" className="text-black relative">
+                        <Bell className="cursor-pointer" />
+                        {unreadIds.length > 0 && (
+                          <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full" />
+                        )}
                       </div>
+
                       <ul
                         tabIndex={0}
                         className="dropdown-content menu bg-[#F2F5FC] rounded-box z-10 w-64 p-4 shadow-sm mt-8 border-2"
                       >
+                        <div className="flex items-center justify-between mb-2">
+                          <h1 className="font-bold">Notifications</h1>
+                          <button
+                            className="text-xs font-semibold text-blue-500"
+                            onClick={markAllAsRead}
+                          >
+                            Read All
+                          </button>
+                        </div>
+
                         {jobsLoading ? (
                           <li>Loading...</li>
                         ) : jobs && jobs.length > 0 ? (
                           jobs.map((job) => (
-                            <li key={job._id} className="mb-2">
+                            <li
+                              key={job._id}
+                              className={`mb-2 ${unreadIds.includes(job._id) ? "font-bold" : ""}`}
+                            >
                               {job.title} - {job.city}
                             </li>
                           ))
