@@ -16,6 +16,7 @@ import UploadBox from "../../Component/UploadBox/UploadBox";
 import UploadingPreview from "../../Component/UploadingPreview/UploadingPreview";
 import ImagePreview from "../../Component/ImagePreview/ImagePreview";
 import axiosInstance from "../../utils/axiosInstance";
+import AccountCreateGuidens from "../../Component/AccountCreateGuidens/AccountCreateGuidens";
 
 const Profile = () => {
   const { user, userInfo, loading, setUserData, sendVerificationEmail } =
@@ -229,8 +230,8 @@ const Profile = () => {
                   alt={formData?.name}
                   className="w-36 h-36 object-cover shadow-[0px_3px_8px_rgba(0,0,0,0.24)] rounded-full"
                   src={
-                    formData.image ||
-                    "	https://caretutor-space-file.nyc3.cdn.digitaloceanspaces.com/assets/img/avataaar/Profile-Picture.png"
+                    formData?.image ||
+                    "https://caretutor-space-file.nyc3.cdn.digitaloceanspaces.com/assets/img/avataaar/Profile-Picture.png"
                   }
                 />
 
@@ -395,6 +396,9 @@ const Profile = () => {
               </p>
             </div>
           </div>
+            <div>
+              <AccountCreateGuidens></AccountCreateGuidens>
+            </div>
           {/* {formData?.adminNote && (
             <div className="rounded-xl bg-blue-50 border border-blue-200 shadow p-4">
               <h3 className="text-lg font-semibold text-blue-800 flex items-center gap-2 mb-2">
