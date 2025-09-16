@@ -414,7 +414,7 @@ const Profile = () => {
                 </button>
                 {isEditing && (
                   <button onClick={handleSave} className="btn w-fit ">
-                    Save Changes
+                    Save
                   </button>
                 )}
               </div>

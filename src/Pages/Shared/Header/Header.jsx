@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import {
+  Bell,
   BookOpen,
   Briefcase,
   ClipboardList,
@@ -192,6 +193,7 @@ const Header = () => {
           </li>
         </>
       )}
+
     </>
   );
 
@@ -222,13 +224,30 @@ const Header = () => {
                   {navOption}
                 </ul>
               </div>
-              <div className="">
+              <div className=" flex">
                 {user ? (
-                  <Link
-                    onClick={handleLogout}
-                    className="btn bg-indigo-500 py-2 px-8 text-white hidden md:block">
-                    Logout
-                  </Link>
+                  <div className="flex items-center gap-5">
+                    <div class="dropdown dropdown-end text-black">
+                      <div tabindex="0" role="button" class="text-black"><Bell /></div>
+                      <ul tabindex="0" class="dropdown-content menu bg-[#F2F5FC] rounded-box z-1 w-64 p-4 shadow-sm mt-8 border-2">
+                        <div className="flex items-center justify-between mb-5">
+                          <h1 className="text-center font-bold"></h1>
+                          <button className="font-bold text-xs">Read All</button>
+                        </div>
+                        {/* <div className="divider divider-info m-0"></div> */}
+                        <ul>
+                          <li>৬ষ্ঠ শ্রেণির শিক্ষার্থী পড়াতে হবে </li>
+                        </ul>
+                      </ul>
+                    </div>
+
+                    <Link
+                      onClick={handleLogout}
+                      className="btn bg-indigo-500 py-2 px-8 text-white hidden md:block">
+                      Logout
+                    </Link>
+                  </div>
+
                 ) : (
                   <Link
                     to={"/signup"}
