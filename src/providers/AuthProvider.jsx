@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, use, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -18,6 +18,35 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userInfo, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    whatsapp: "",
+    gender: "",
+    city: "",
+    location: "",
+    fbLink: "",
+    institute: "",
+    department: "",
+    degree: "",
+    passingYear: "",
+    experience: "",
+    agreement: "",
+    image: "",
+    nid: "",
+    idCard: "",
+  });
+
+
+  const [profileParcentage, setProfileParcentage] = useState(() => {
+    // load from localStorage if available
+    return parseInt(localStorage.getItem("profileParcentage")) || 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("profileParcentage", profileParcentage);
+  }, [profileParcentage]);
+
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -51,6 +80,45 @@ const AuthProvider = ({ children }) => {
       return { success: false, error: "No user logged in." };
     }
   };
+
+  const requiredFields = [
+    "name",
+    "phone",
+    "whatsapp",
+    "gender",
+    "city",
+    "location",
+    "fbLink",
+    "institute",
+    "department",
+    "degree",
+    "passingYear",
+    "experience",
+    "agreement",
+    "image",
+    "nid",
+    "idCard",
+  ];
+
+
+  // 🔹 calculate completion
+  const calculateCompletion = () => {
+    let filled = 0;
+    requiredFields.forEach((field) => {
+      if (formData[field] && formData[field].toString().trim() !== "") {
+        filled++;
+      }
+    });
+    return Math.round((filled / requiredFields.length) * 100);
+  };
+
+  // 🔹 whenever formData changes → update percentage
+  useEffect(() => {
+    const percentage = calculateCompletion();
+    setProfileParcentage(percentage);
+    localStorage.setItem("profileParcentage", percentage);
+  }, [formData]);
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -97,6 +165,9 @@ const AuthProvider = ({ children }) => {
     user,
     userInfo,
     loading,
+    profileParcentage,
+    formData,
+    setFormData,
     createUser,
     signIn,
     logOut,
@@ -104,7 +175,11 @@ const AuthProvider = ({ children }) => {
     setUserData,
     resetPassword,
     sendVerificationEmail,
+    setProfileParcentage,
   };
+
+
+
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

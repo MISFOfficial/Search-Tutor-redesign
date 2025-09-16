@@ -10,8 +10,10 @@ import Swal from "sweetalert2";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const JobBoard = () => {
-  const { userInfo } = useContext(AuthContext);
+  const { userInfo, profileParcentage } = useContext(AuthContext);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  console.log(profileParcentage)
 
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const cityFromUrl = searchParams.get("city") || "";

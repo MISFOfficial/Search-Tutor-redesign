@@ -19,7 +19,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import AccountCreateGuidens from "../../Component/AccountCreateGuidens/AccountCreateGuidens";
 
 const Profile = () => {
-  const { user, userInfo, loading, setUserData, sendVerificationEmail } =
+  const { user, userInfo, loading, setUserData, sendVerificationEmail, profileParcentage, formData, setFormData } =
     useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
   const [nidUploading, setNidUploading] = useState(false);
@@ -29,28 +29,6 @@ const Profile = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    whatsapp: "",
-    email: "",
-    gender: "",
-    city: "",
-    location: "",
-    fbLink: "",
-    institute: "",
-    // idNo: "",
-    department: "",
-    degree: "",
-    passingYear: "",
-    experience: "",
-    agreement: "",
-    image: "",
-    nid: "",
-    idCard: "",
-    adminNote: "",
-  });
 
   useEffect(() => {
     if (userInfo) {
@@ -217,6 +195,12 @@ const Profile = () => {
       </div>
     );
   }
+
+
+
+
+
+
 
   return (
     <div className="mx-auto lg:max-w-[60rem] xl:max-w-[71.25rem] my-10 p-4">
@@ -405,13 +389,14 @@ const Profile = () => {
           <div className="md:px-3">
             {/* profile persentage */}
             <div className="">
-              <h1 className="font-bold">Profile Complete %</h1>
+              <h1 className="font-bold">Profile Complete</h1>
               <div className="flex items-center gap-2">
-                <progress class="progress progress-info w-full" value="20" max="100"></progress>
-                <h1>20%</h1>
-                <button onClick={handleEditToggle} className="btn w-fit my-4">
-                  {isEditing ? "Cancel" : "Edit"}
-                </button>
+                <progress class="progress progress-info w-full" value={profileParcentage} max="100"></progress>
+                <h1>{profileParcentage}%</h1>
+                {!isEditing &&
+                  <button onClick={handleEditToggle} className="btn w-fit my-4">
+                    Edit
+                  </button>}
                 {isEditing && (
                   <button onClick={handleSave} className="btn w-fit ">
                     Save

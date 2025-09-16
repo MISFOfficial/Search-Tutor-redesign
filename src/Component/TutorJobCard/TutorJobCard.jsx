@@ -8,7 +8,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import JobPostTime from "../JobPostTime/JobPostTime";
 
 const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
-  const { user } = useContext(AuthContext);
+  const { user, profileParcentage } = useContext(AuthContext);
   const navigate = useNavigate();
   const [hasApplied, setHasApplied] = useState(false);
 
@@ -43,7 +43,15 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
     if (!user) {
       return navigate("/signin");
     }
-
+    if (profileParcentage < 80) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Profile Incomplete',
+        text: 'Please Complete Your Profile at last 80%',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    }
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -101,13 +109,15 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
     if (!user) {
       return navigate("/signin");
     }
+
+
     // console.log(job)
     setUpdatedJob(job); // preload current job
     setIsUpdateModalOpen(true);
   }
 
-  console.log(updatedJob?.status)
-  console.log(updatedJob)
+  // console.log(updatedJob?.status)
+  // console.log(updatedJob)
 
   const handleUpdateJob = async (e) => {
     e.preventDefault();
@@ -156,7 +166,7 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
     }
   };
 
-  console.log(updatedJob?.feedback)
+  // console.log(updatedJob?.feedback)
 
   return (
     <>
@@ -181,7 +191,7 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
                 <option value="Cancel">Tution Cancel</option>
               </select>
               <textarea
-              defaultValue={updatedJob?.feedback}
+                defaultValue={updatedJob?.feedback}
                 placeholder="set the feedback or the reason"
                 className="border-2 border-blue-600 rounded-lg w-full h-40 p-2" name="comments">
               </textarea>
