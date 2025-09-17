@@ -8,7 +8,7 @@ const AdminNoteCard = ({ users }) => {
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(!users?.adminNote);
 
-  console.log(users)
+  // console.log(users)
 
   const handleSaveNote = async () => {
     try {

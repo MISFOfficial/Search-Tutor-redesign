@@ -1,28 +1,74 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import emailjs from '@emailjs/browser';
 
 const AppliedCard = ({ user, jobId, app, handleStatusChange }) => {
   const navigate = useNavigate();
 
   const handleStatusUpdate = (id, value) => {
-    // if (value === "reviewed") {
-    //   Swal.fire({
-    //     title: "Are you sure?",
-    //     text: "Do you really want to shortlist this application?",
-    //     icon: "question",
-    //     showCancelButton: true,
-    //     confirmButtonText: "Yes, shortlist",
-    //     cancelButtonText: "Cancel",
-    //     reverseButtons: true,
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       handleStatusChange(id, value); // proceed
-    //     }
-    //   });
-    // } else {
-    //   handleStatusChange(id, value); // normal update
-    // }
     handleStatusChange(id, value);
+    if (value === "selected") {
+      sendEmailNotification(user, jobId);
+    }
+  };
+
+  // send the email selecting the user
+  const sendEmailNotification = (selectedUser, selectedJobId) => {
+    if (!selectedUser?.email) return;
+    console.log(selectedUser)
+
+    const templateParams = {
+      to_name: selectedUser?.name || "Tutor",
+      to_email: selectedUser?.email,
+      job_id: selectedJobId,
+      phone: selectedUser.phone || "Not Provided",
+      status: "Selected",
+      applied_date: new Date(app.appliedAt).toLocaleDateString(),
+      // message: "Congratulations, you have been selected for this job. Please contact the authority as soon as possible."
+    };
+    console.log(import.meta.env.VITE_SERVICES_ID,
+      import.meta.env.VITE_TEMPLATE_ID, import.meta.env.VITE_PUBLIC_KEY)
+
+    // emailjs.init(import.meta.env.VITE_PUBLIC_KEY);
+
+    emailjs
+      .send(
+        import.meta.env.VITE_SERVICES_ID, // Replace with your EmailJS Service ID
+        import.meta.env.VITE_TEMPLATE_ID, // Replace with your EmailJS template ID
+        templateParams,
+        import.meta.env.VITE_PUBLIC_KEY, // Replace with your EmailJS Public Key
+      )
+      .then(
+        (response) => {
+          toast.success('Email sent successfully!!', {
+            position: "top-center",
+            text: response.status,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+          });
+          // console.log("✅ Email sent successfully!", response.status, response.text);
+        },
+        (error) => {
+          toast.error('🦄 Failed to send email!', {
+            position: "top-center",
+            text: error.status,
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+          });
+          // console.error("❌ Failed to send email:", error.status, error.text);
+        }
+      );
   };
 
 

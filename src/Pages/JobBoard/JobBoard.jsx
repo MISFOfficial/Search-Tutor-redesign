@@ -13,7 +13,7 @@ const JobBoard = () => {
   const { userInfo, profileParcentage } = useContext(AuthContext);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log(profileParcentage)
+  // console.log(profileParcentage)
 
   const pageFromUrl = parseInt(searchParams.get("page")) || 1;
   const cityFromUrl = searchParams.get("city") || "";

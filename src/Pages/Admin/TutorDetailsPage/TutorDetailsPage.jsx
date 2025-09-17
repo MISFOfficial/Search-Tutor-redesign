@@ -65,7 +65,7 @@ const TutorDetailsPage = () => {
   }, [uid]);
 
 
-  console.log(users?.email)
+  // console.log(users?.email)
 
   if (loading) {
     return (

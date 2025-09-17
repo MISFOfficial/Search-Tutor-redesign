@@ -29,16 +29,16 @@ const Header = () => {
       })
       .catch((error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
+        // console.log(errorMessage);
       });
   };
 
   const { data: jobs, isLoading: jobsLoading, refetch, unreadIds, markAllAsRead } =
     useJobNotifications();
   refetch()
-  console.log(jobs)
+  // console.log(jobs)
 
-  console.log(userInfo)
+  // console.log(userInfo)
 
   const navOption = (
     <>
