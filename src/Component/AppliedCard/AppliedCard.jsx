@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import emailjs from '@emailjs/browser';
+import { Slide, toast } from "react-toastify";
 
 const AppliedCard = ({ user, jobId, app, handleStatusChange }) => {
   const navigate = useNavigate();
