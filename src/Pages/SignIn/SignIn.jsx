@@ -4,7 +4,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import axiosInstance from "../../utils/axiosInstance";
-import { subscribeUser } from "../../pushNotifications";
 import { registerServiceWorker } from "../../serviceWorkerRegistration";
 
 const SignIn = () => {
@@ -43,7 +42,6 @@ const SignIn = () => {
             timer: 1200,
             showConfirmButton: false,
           });
-          subscribeUser();
 
           navigate("/");
         } else {
