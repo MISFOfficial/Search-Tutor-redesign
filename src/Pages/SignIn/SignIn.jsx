@@ -4,7 +4,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import axiosInstance from "../../utils/axiosInstance";
-import { registerServiceWorker } from "../../serviceWorkerRegistration";
 
 const SignIn = () => {
   const { signIn, loading, setLoading } = useContext(AuthContext);
@@ -12,7 +11,6 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  registerServiceWorker()
 
   const handleLogin = async (event) => {
     event.preventDefault();

@@ -7,13 +7,15 @@ import { Clock, Trash2, Share2, Pencil } from "lucide-react";
 import axiosInstance from "../../utils/axiosInstance";
 import JobPostTime from "../JobPostTime/JobPostTime";
 
-const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
+const TutorJobCard = ({ job, onDelete, isAdmin, refetch, userCity }) => {
   const { user, profileParcentage } = useContext(AuthContext);
   const navigate = useNavigate();
   const [hasApplied, setHasApplied] = useState(false);
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [updatedJob, setUpdatedJob] = useState();
+
+  console.log(userCity)
 
   // Fetch if user has applied
   useEffect(() => {
@@ -40,6 +42,7 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
   }, [user, job._id]);
 
   const handleApply = async () => {
+
     if (!user) {
       return navigate("/signin");
     }
@@ -167,6 +170,7 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
   };
 
   // console.log(updatedJob?.feedback)
+
 
   return (
     <>
@@ -450,7 +454,7 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
 
           <div className="mb-6 flex  items-center justify-between gap-6">
             <div className="flex items-center gap-2">
-              <Link>
+              {userCity === job?.city ? <Link>
                 <button
                   disabled={hasApplied}
                   onClick={handleApply}
@@ -458,7 +462,13 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch }) => {
                   type="button">
                   {hasApplied ? "Already Applied" : "Apply"}
                 </button>
-              </Link>
+              </Link> : <button
+                disabled={userCity === job?.city}
+                className="  rounded-md text-sm font-medium  transition-all duration-300   border border-indigo-500  text-indigo-500 h-10 px-4 py-2 cursor-not-allowed"
+                type="button">
+                Not allowed
+              </button>}
+
               {/* Update Button */}
               {isAdmin && (
                 <button

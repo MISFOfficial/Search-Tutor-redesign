@@ -27,6 +27,8 @@ const JobBoard = () => {
   const itemsPerPage = 10;
   const queryClient = useQueryClient();
 
+  const userCity = userInfo?.city
+
   // Fetch jobs using TanStack Query
   const {
     data,
@@ -239,6 +241,7 @@ const JobBoard = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-3">
               {jobs.map((job) => (
                 <TutorJobCard
+                  userCity={userCity}
                   refetch={refetch}
                   key={job._id}
                   job={job}
