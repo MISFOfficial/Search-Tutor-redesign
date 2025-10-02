@@ -129,7 +129,7 @@ const AppliedCard = ({ user, jobId, app, handleStatusChange }) => {
         </div>
         <div className="mt-2">
           <h1 className="font-semibold">Skills:</h1>
-          <div className="flex flex-wrap gap-2 mt-1">
+          <div className="flex flex-wrap gap-2 mt-1 w-full">
             {user?.skills && user.skills.length > 0 ? (
               user.skills.map((skill, index) => (
                 <span
