@@ -148,7 +148,7 @@ const AuthProvider = ({ children }) => {
 
           setUserData(userRes.data);
         } catch (error) {
-          console.error("Error fetching user data:", error);
+          // console.error("Error fetching user data:", error);
           setUserData(null);
         }
       } else {

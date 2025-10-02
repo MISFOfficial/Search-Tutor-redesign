@@ -70,8 +70,8 @@ const Tutors = () => {
         Swal.fire("Oops!", "Failed to update payment status.", "error");
       }
     } catch (error) {
-      console.error("Error updating payment status:", error);
-      Swal.fire("Error", "Something went wrong.", "error");
+      // console.error("Error updating payment status:", error);
+      Swal.fire("Error", "Something went wrong.", error);
     }
   };
 

@@ -15,7 +15,7 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch, userCity }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [updatedJob, setUpdatedJob] = useState();
 
-  console.log(userCity)
+  // console.log(userCity)
 
   // Fetch if user has applied
   useEffect(() => {
@@ -33,7 +33,7 @@ const TutorJobCard = ({ job, onDelete, isAdmin, refetch, userCity }) => {
         setHasApplied(res.data.hasApplied);
       })
       .catch((err) => {
-        console.error("Error checking application:", err);
+        // console.error("Error checking application:", err);
         setHasApplied(false);
       })
       .finally(() => {

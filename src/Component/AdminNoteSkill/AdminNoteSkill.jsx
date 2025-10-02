@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BriefcaseBusiness } from "lucide-react";
 import axiosInstance from "../../utils/axiosInstance";
+import { toast } from "react-toastify";
 
 const AdminNoteSkill = ({ user }) => {
     const [skills, setSkills] = useState(user?.skills || []);
@@ -31,11 +32,12 @@ const AdminNoteSkill = ({ user }) => {
             setLoading(true);
             const userId = user._id || user.uid;
             const res = await axiosInstance.put(`/users/${userId}/skills`, { skills });
-            console.log("✅ Saved:", res.data);
-            alert("Skills saved successfully ✅");
+            // console.log("✅ Saved:", res.data);
+            toast.success('Skill updated')
         } catch (error) {
-            console.error("❌ Error saving skills:", error);
-            alert("Failed to save skills ❌");
+            // console.error("❌ Error saving skills:", error);
+            toast.warn('Saving skill Error')
+
         } finally {
             setLoading(false);
         }

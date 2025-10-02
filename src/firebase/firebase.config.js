@@ -26,13 +26,13 @@ export const requestForToken = async () => {
       vapidKey: import.meta.env.VAPID_PUBLIC_KEY,
     });
     if (token) {
-      console.log("FCM Token:", token);
+      // console.log("FCM Token:", token);
       // send this token to your backend to save for sending push
     } else {
-      console.log("No registration token available");
+      // console.log("No registration token available");
     }
   } catch (err) {
-    console.error("An error occurred while retrieving token.", err);
+    // console.error("An error occurred while retrieving token.", err);
   }
 };
 
