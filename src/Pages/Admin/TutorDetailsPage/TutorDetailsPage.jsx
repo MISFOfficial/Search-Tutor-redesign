@@ -66,7 +66,7 @@ const TutorDetailsPage = () => {
   }, [uid]);
 
 
-  // console.log(users?.email)
+  // console.log(users)
 
   if (loading) {
     return (
@@ -183,7 +183,7 @@ const TutorDetailsPage = () => {
 
 
           <div className="rounded-xl bg-white border border-indigo-100 shadow-md p-4 pb-8 text-center mb-4 ">
-            {matchedUser && <AdminNoteSkill users={users} />}
+            {matchedUser && <AdminNoteSkill user={users} />}
           </div>
           <div className="rounded-xl bg-white border border-indigo-100 shadow-md p-4 pb-8 text-center mb-4 ">
             {matchedUser && <AdminNoteCard users={users} />}

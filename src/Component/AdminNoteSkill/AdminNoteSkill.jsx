@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { BriefcaseBusiness } from "lucide-react";
-import axiosInstance from "../../utils/axiosInstance"; // ✅ your custom axios setup
+import axiosInstance from "../../utils/axiosInstance";
 
-const AdminNoteSkill = ({ userId }) => {
-    const [skills, setSkills] = useState([]);
+const AdminNoteSkill = ({ user }) => {
+    const [skills, setSkills] = useState(user?.skills || []);
     const [inputValue, setInputValue] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -13,7 +13,7 @@ const AdminNoteSkill = ({ userId }) => {
             if (!skills.includes(inputValue.trim())) {
                 setSkills([...skills, inputValue.trim()]);
             }
-            setInputValue(""); // clear input after enter
+            setInputValue("");
         }
     };
 
@@ -22,30 +22,31 @@ const AdminNoteSkill = ({ userId }) => {
     };
 
     const handleSave = async () => {
+        if (!user?._id && !user?.uid) {
+            alert("❌ No user ID found");
+            return;
+        }
+
         try {
             setLoading(true);
-            // 🔥 send skills array to backend
+            const userId = user._id || user.uid;
             const res = await axiosInstance.put(`/users/${userId}/skills`, { skills });
-            console.log("Saved:", res.data);
-            setLoading(false);
+            console.log("✅ Saved:", res.data);
             alert("Skills saved successfully ✅");
         } catch (error) {
-            console.error("Error saving skills:", error);
-            setLoading(false);
+            console.error("❌ Error saving skills:", error);
             alert("Failed to save skills ❌");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="rounded-xl bg-blue-50 border border-blue-200 shadow p-4">
-            <h3 className="text-lg font-semibold text-blue-800 flex items-center justify-between">
-                <span className="flex items-center gap-2">
-                    <BriefcaseBusiness />
-                    Skills
-                </span>
+            <h3 className="text-lg font-semibold text-blue-800 flex items-center gap-2">
+                <BriefcaseBusiness /> Skills
             </h3>
 
-            {/* Show skills as tags */}
             <div className="mt-3 flex flex-wrap gap-2">
                 {skills.map((skill, index) => (
                     <span
@@ -63,7 +64,6 @@ const AdminNoteSkill = ({ userId }) => {
                 ))}
             </div>
 
-            {/* Input for new skills */}
             <input
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
@@ -72,7 +72,6 @@ const AdminNoteSkill = ({ userId }) => {
                 className="w-full mt-2 p-2 border border-blue-300 rounded-lg text-sm focus:outline-none focus:ring focus:ring-blue-200"
             />
 
-            {/* Save button */}
             <div className="mt-3 flex gap-2">
                 <button
                     onClick={handleSave}

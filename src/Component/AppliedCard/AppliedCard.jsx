@@ -72,52 +72,79 @@ const AppliedCard = ({ user, jobId, app, handleStatusChange }) => {
       );
   };
 
+  console.log(user)
+
 
   return (
     <div className="border rounded-lg p-4 shadow-sm bg-white flex flex-col sm:flex-row sm:items-center sm:justify-between">
-      <div className="mb-3 sm:mb-0">
-        <div className="flex items-center gap-2">
-          <p className="text-sm text-gray-600 font-semibold">
-            {user?.name || "Unknown Name"}
-          </p>
-          {user.isVerified && !user.isRedVerified && (
-            <div>
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/15050/15050690.png"
-                alt="verified"
-                className="w-5 h-5 object-cover"
-              />
-            </div>
-          )}
-          {user.isRedVerified && !user.isVerified && (
-            <div>
-              <img
-                src="https://img.icons8.com/?size=30&id=99285&format=png"
-                srcSet="https://img.icons8.com/?size=30&id=99285&format=png 1x,https://img.icons8.com/?size=60&id=99285 format=png 2x"
-                alt="Red Verified Badge"
-                className="w-7 h-7 object-cover"
-                style={{
-                  filter:
-                    "brightness(0) saturate(100%) invert(19%) sepia(89%) saturate(6975%) hue-rotate(1deg) brightness(95%) contrast(122%)",
-                }}
-              />
-            </div>
-          )}
+      <div className="mb-3 sm:mb-0 flex items-start gap-10">
+        <div>
+          <div className="flex items-center gap-2">
+            <p className="text-sm text-gray-600 font-semibold">
+              {user?.name || "Unknown Name"}
+            </p>
+            {user.isVerified && !user.isRedVerified && (
+              <div>
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/15050/15050690.png"
+                  alt="verified"
+                  className="w-5 h-5 object-cover"
+                />
+              </div>
+            )}
+            {user.isRedVerified && !user.isVerified && (
+              <div>
+                <img
+                  src="https://img.icons8.com/?size=30&id=99285&format=png"
+                  srcSet="https://img.icons8.com/?size=30&id=99285&format=png 1x,https://img.icons8.com/?size=60&id=99285 format=png 2x"
+                  alt="Red Verified Badge"
+                  className="w-7 h-7 object-cover"
+                  style={{
+                    filter:
+                      "brightness(0) saturate(100%) invert(19%) sepia(89%) saturate(6975%) hue-rotate(1deg) brightness(95%) contrast(122%)",
+                  }}
+                />
+              </div>
+            )}
+
+
+
+          </div>
+
+
+
+          <p className="text-sm text-gray-600">{user?.email || "No Email"}</p>
+          <p className="text-sm text-gray-600">{user?.phone || "No Phone"}</p>
+          <div className="flex items-center gap-4">
+            <p className="text-sm text-gray-600">Job ID: {jobId}</p>
+            <p className="text-sm text-gray-500">
+              Applied: {new Date(app.appliedAt).toLocaleDateString()}
+            </p>
+          </div>
+          <button
+            className="btn my-2"
+            onClick={() => navigate(`/tutor/${user.uid}`)}>
+            see tutor info
+          </button>
+        </div>
+        <div className="mt-2">
+          <h1 className="font-semibold">Skills:</h1>
+          <div className="flex flex-wrap gap-2 mt-1">
+            {user?.skills && user.skills.length > 0 ? (
+              user.skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                >
+                  {skill}
+                </span>
+              ))
+            ) : (
+              <span className="text-gray-500 text-sm">No skills added</span>
+            )}
+          </div>
         </div>
 
-        <p className="text-sm text-gray-600">{user?.email || "No Email"}</p>
-        <p className="text-sm text-gray-600">{user?.phone || "No Phone"}</p>
-        <div className="flex items-center gap-4">
-          <p className="text-sm text-gray-600">Job ID: {jobId}</p>
-          <p className="text-sm text-gray-500">
-            Applied: {new Date(app.appliedAt).toLocaleDateString()}
-          </p>
-        </div>
-        <button
-          className="btn my-2"
-          onClick={() => navigate(`/tutor/${user.uid}`)}>
-          see tutor info
-        </button>
       </div>
 
       <div>
