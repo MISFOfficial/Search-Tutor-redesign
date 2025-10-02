@@ -15,6 +15,7 @@ import AdminNoteCard from "../../../Component/AdminNoteCard/AdminNoteCard";
 import AccountCreateGuidens from "../../../Component/AccountCreateGuidens/AccountCreateGuidens";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
+import AdminNoteSkill from "../../../Component/AdminNoteSkill/AdminNoteSkill";
 
 const TutorDetailsPage = () => {
   const { user } = useContext(AuthContext)
@@ -180,6 +181,10 @@ const TutorDetailsPage = () => {
             <AccountCreateGuidens></AccountCreateGuidens>
           </div> */}
 
+
+          <div className="rounded-xl bg-white border border-indigo-100 shadow-md p-4 pb-8 text-center mb-4 ">
+            {matchedUser && <AdminNoteSkill users={users} />}
+          </div>
           <div className="rounded-xl bg-white border border-indigo-100 shadow-md p-4 pb-8 text-center mb-4 ">
             {matchedUser && <AdminNoteCard users={users} />}
           </div>
